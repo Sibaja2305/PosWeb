@@ -20,8 +20,7 @@
                     <a href="1.jsp" class="logo" >logo</a> 
                     <input type="checkbox" id="menu">
                     <label for="menu"> 
-                       
-                        <img src="image/134216_menu_lines_hamburger_icon.png" class="menu-icono" alt="imagen boton menu"/>
+                       <img src="image/134216_menu_lines_hamburger_icon.png" class="menu-icono" alt="imagen boton menu"/>
                     </label>
                     <nav class="navbar">
                         <ul>
@@ -37,6 +36,6 @@
                 
             </div>
         </header>
-        <h1>Inicio</h1>
+        <h1>Inventario</h1>
     </body>
 </html>
