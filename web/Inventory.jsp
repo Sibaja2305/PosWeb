@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <link href="style.css" rel="stylesheet" type="text/css"/>
+    <script src="PosScript.js" type="text/javascript"></script>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
@@ -33,6 +34,7 @@
                             <li><a href="Inventory.jsp">Inventario</a></li>
                             <li><a href="Report.jsp">Reporte</a></li>
                             <li><a href="User.jsp">Usuario</a></li>
+                            <li> <button id="logout">Cerrar Sesion</button></li>
                         </ul>
 
                     </nav>

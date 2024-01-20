@@ -33,6 +33,6 @@
         }
     } else {
         // Inicio de sesión fallido
-        out.println("<script>alert('Usuario o contraseña incorrectos'); window.location.href='login.jsp';</script>");
+        out.println("<script>alert('Usuario o contraseña incorrectos'); window.location.href='Login.jsp';</script>");
     }
 %>

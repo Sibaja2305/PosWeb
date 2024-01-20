@@ -58,6 +58,15 @@ body {
     display: block;
     font-weight: bold;
 }
+.menu .navbar ul li button{
+    font-size: 18px;
+    padding: 20px;
+    color: #DEDEDE;
+    display: block;
+    font-weight: bold;
+    background: none;
+    border: none;
+}
 
 .menu .navbar ul li a:hover {
     color: #ffffff
