@@ -17,11 +17,16 @@
             <div class ="content">
                 
                 <div class="menu container">
-                    <a href="1.jsp" class="logo" >logo</a> 
+                   
+                    <div class="logoContainer">
+                        <img style="width: 50px;" src="image/businessman.png" alt=""/>
+                    <a href="1.jsp" class="logo" >Abministrador</a> 
+                    </div>
+                    
                     <input type="checkbox" id="menu">
                     <label for="menu"> 
                        
-                        <img src="image/134216_menu_lines_hamburger_icon.png" class="menu-icono" alt="imagen boton menu"/>
+                        <img src="image/134216_menu_lines_hamburger_icon.png" class="logo" alt="imagen boton menu"/>
                     </label>
                     <nav class="navbar">
                         <ul>
