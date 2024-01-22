@@ -23,6 +23,14 @@ public class User {
         this.range = range;
     }
 
+    public User(int id_user, String user, String password, int range) {
+        this.id_user = id_user;
+        this.user = user;
+        this.password = password;
+        this.range = range;
+    }
+    
+
     /**
      * @return the id_user
      */
