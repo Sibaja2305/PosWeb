@@ -24,7 +24,7 @@
                 <div class="menu container">
 
                     <div class="logoContainer">
-                        <img style="width: 50px;" src="image/businessman.png" alt=""/>
+                        <img style="width: 50px;" src="image/businessman.png" alt="Imagen de ilustratiba"/>
                         <a href="1.jsp" class="logo" >Abministrador</a> 
                     </div>
 
@@ -48,7 +48,7 @@
             </div>
         </header>
         <h1>Usuario</h1>
-        <a href="NewUsers.jsp"> <input type="submit" value="nuevo" name="newUser" /> </a>
+        <a href="NewUsers.jsp"> <input style="margin-left: 10px; margin-bottom: 5px" type="submit" class="btn btn-success"value="nuevo" name="newUser" /> </a>
         <%
 
             ConnectionMysql mysql = new ConnectionMysql("pos");
