@@ -25,7 +25,7 @@
 
                     <div class="logoContainer">
                         <img style="width: 50px;" src="image/businessman.png" alt="Imagen de ilustratiba"/>
-                        <a href="1.jsp" class="logo" >Abministrador</a> 
+                        <a href="1.jsp" class="logo" style="text-decoration: none" >Abministrador</a> 
                     </div>
 
                     <input type="checkbox" id="menu">
