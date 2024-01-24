@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
     <link href="bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="style.css" rel="stylesheet" type="text/css"/>
+    <link href="estilo.css" rel="stylesheet" type="text/css"/>
     <script src="PosScript.js" type="text/javascript"></script>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,13 +19,13 @@
     </head>
     <body>
         <header>
-            <div class ="content">
+            <div class ="s">
 
                 <div class="menu container">
 
                     <div class="logoContainer">
                         <img style="width: 50px;" src="image/businessman.png" alt="Imagen de ilustratiba"/>
-                        <a href="1.jsp" class="logo" style="text-decoration: none" >Abministrador</a> 
+                        <a href="1.jsp" class="logo"  >Administrador</a> 
                     </div>
 
                     <input type="checkbox" id="menu">

@@ -27,7 +27,7 @@ public class ConnectionMysql {
     String bd = "world";
     String url = "jdbc:mysql://localhost:3306/";
     String usuario = "root";
-    String contraseña = "Alfaher1503!";
+    String contraseña = "Racataca2305.";
     String driver = "com.mysql.cj.jdbc.Driver";
     Connection cx;
 
