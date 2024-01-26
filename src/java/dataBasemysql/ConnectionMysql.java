@@ -27,7 +27,7 @@ public class ConnectionMysql {
     String bd = "world";
     String url = "jdbc:mysql://localhost:3306/";
     String usuario = "root";
-    String contraseña = "Racataca2305.";
+    String contraseña = "Supercell07*";
     String driver = "com.mysql.cj.jdbc.Driver";
     Connection cx;
 
@@ -156,6 +156,24 @@ public class ConnectionMysql {
         }
 
         return false;
+    }
+    public int getCantMesas() throws SQLException{
+         Statement stmt = cx.createStatement();
+          ResultSet rs = stmt.executeQuery("SELECT * FROM cantidadmesas;");
+          int cantMesas = 0;
+        try {
+          while (rs.next()) {
+           cantMesas = Integer.parseInt(rs.getString("cant_mesas"));
+            System.out.println("retorna cantidad de mesas ="+ cantMesas);
+          }
+           return cantMesas;
+        } catch (SQLException e) {
+             System.out.println(e.getMessage()+ "es este");
+            return 0;
+        }finally {
+            rs.close();
+
+        }
     }
 
 }

@@ -4,9 +4,14 @@
     Author     : Hp EliteBook
 --%>
 
+<%@page import="dataBasemysql.ConnectionMysql"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <% 
+    ConnectionMysql mysql = new ConnectionMysql("pos");
+    int cantidad = mysql.getCantMesas();
+    %>
     <link href="estilo.css" rel="stylesheet" type="text/css"/>
     <script src="PosScript.js" type="text/javascript"></script>
     <head>
@@ -44,6 +49,19 @@
                 
             </div>
         </header>
-        <h1>Inicio</h1>
+        <h1>Mesas</h1>
+      <form method="post" action="LoginValidation.jsp">
+          
+                <div class="form-group">
+                    <label class="labels">Cantidad de Mesas:</label>
+                    <input type="text" class="form-control" name="CantMesas" placeholder="<%=cantidad%>" required Style ="width: 75%; outline: none; border: none; border-bottom: solid #51585e" >
+                </div>
+             
+                
+             <div style="float: left">
+                 <button type="submit" class="btn btn-primary">Guardar</button>
+             </div>
+         
+            </form>
     </body>
 </html>
