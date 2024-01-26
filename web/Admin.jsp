@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <link href="style.css" rel="stylesheet" type="text/css"/>
+    <link href="estilo.css" rel="stylesheet" type="text/css"/>
     <script src="PosScript.js" type="text/javascript"></script>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,7 +15,7 @@
     </head>
     <body>
         <header>
-            <div class ="content">
+            <div class ="s">
                 
                 <div class="menu container">
                    
