@@ -50,7 +50,7 @@
             </div>
         </header>
         <h1>Mesas</h1>
-      <form method="post" action="LoginValidation.jsp">
+      <form method="post" action="CantTablesValidation.jsp">
           
                 <div class="form-group">
                     <label class="labels">Cantidad de Mesas:</label>

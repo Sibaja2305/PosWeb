@@ -175,5 +175,97 @@ public class ConnectionMysql {
 
         }
     }
+    public boolean checkStatus() throws SQLException{
+     cx = conectar();
+        Statement stmt = cx.createStatement();
+    
+        String consulta = "select * from estadomesa where estado = 2;";
+        System.out.println(consulta);
+        ResultSet rs = stmt.executeQuery(consulta);
 
+        try {
+            if (rs.next()) {
+                return false;
+            } else {
+                return true;
+            }
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ignore) {
+                System.out.println("Exeption on login: " + ignore.getMessage());
+            }
+        }
+
+}
+    public void deleteTablesStatus(int diferencia){
+         try {
+
+            String query = "DELETE FROM estadomesa ORDER BY num_mesa DESC LIMIT "+ diferencia +";";
+             System.out.println(query);
+            PreparedStatement preparedStmt = cx.prepareStatement(query);
+            
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+
+           
+            
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+           
+        }
+    }
+    public void editCantMesas(int cantidad){
+        
+        try {
+
+            String query = "UPDATE cantidadmesas "
+                    + "     SET cant_mesas = ?"
+                    + "     WHERE id_cantMesas = 1;";
+
+            PreparedStatement preparedStmt = cx.prepareStatement(query);
+
+            preparedStmt.setInt(1, cantidad);
+           
+
+            // execute the preparedstatement
+            preparedStmt.executeUpdate();
+
+            cx.close();
+          
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+         
+        }
+    }
+    public void insertTables(int cantidad){
+       try {
+           int ultimaMesa = getCantMesas();
+           for (int i = 0; i < cantidad; i++) {
+            ultimaMesa = ultimaMesa + 1;   
+           
+            // the mysql insert statement
+            String query = " insert into estadomesa (num_mesa, estado)"
+                    + " values (?, ? )";
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = cx.prepareStatement(query);
+            
+            preparedStmt.setInt(1, ultimaMesa);
+            preparedStmt.setInt(2, 1);
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+           }
+           
+            
+        } catch (Exception ex) {
+            System.out.println("Fallo la inserción" + ex.getMessage());
+        }
+
+        
+    }
 }
