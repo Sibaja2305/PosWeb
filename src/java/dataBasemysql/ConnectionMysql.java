@@ -157,28 +157,30 @@ public class ConnectionMysql {
 
         return false;
     }
-    public int getCantMesas() throws SQLException{
-         Statement stmt = cx.createStatement();
-          ResultSet rs = stmt.executeQuery("SELECT * FROM cantidadmesas;");
-          int cantMesas = 0;
+
+    public int getCantMesas() throws SQLException {
+        Statement stmt = cx.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM cantidadmesas;");
+        int cantMesas = 0;
         try {
-          while (rs.next()) {
-           cantMesas = Integer.parseInt(rs.getString("cant_mesas"));
-            System.out.println("retorna cantidad de mesas ="+ cantMesas);
-          }
-           return cantMesas;
+            while (rs.next()) {
+                cantMesas = Integer.parseInt(rs.getString("cant_mesas"));
+                System.out.println("retorna cantidad de mesas =" + cantMesas);
+            }
+            return cantMesas;
         } catch (SQLException e) {
-             System.out.println(e.getMessage()+ "es este");
+            System.out.println(e.getMessage() + "es este");
             return 0;
-        }finally {
+        } finally {
             rs.close();
 
         }
     }
-    public boolean checkStatus() throws SQLException{
-     cx = conectar();
+
+    public boolean checkStatus() throws SQLException {
+        cx = conectar();
         Statement stmt = cx.createStatement();
-    
+
         String consulta = "select * from estadomesa where estado = 2;";
         System.out.println(consulta);
         ResultSet rs = stmt.executeQuery(consulta);
@@ -197,28 +199,27 @@ public class ConnectionMysql {
             }
         }
 
-}
-    public void deleteTablesStatus(int diferencia){
-         try {
+    }
 
-            String query = "DELETE FROM estadomesa ORDER BY num_mesa DESC LIMIT "+ diferencia +";";
-             System.out.println(query);
+    public void deleteTablesStatus(int diferencia) {
+        try {
+
+            String query = "DELETE FROM estadomesa ORDER BY num_mesa DESC LIMIT " + diferencia + ";";
+            System.out.println(query);
             PreparedStatement preparedStmt = cx.prepareStatement(query);
-            
 
             // execute the preparedstatement
             preparedStmt.execute();
 
-           
-            
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
-           
+
         }
     }
-    public void editCantMesas(int cantidad){
-        
+
+    public void editCantMesas(int cantidad) {
+
         try {
 
             String query = "UPDATE cantidadmesas "
@@ -228,44 +229,71 @@ public class ConnectionMysql {
             PreparedStatement preparedStmt = cx.prepareStatement(query);
 
             preparedStmt.setInt(1, cantidad);
-           
 
             // execute the preparedstatement
             preparedStmt.executeUpdate();
 
             cx.close();
-          
+
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
-         
+
         }
     }
-    public void insertTables(int cantidad){
-       try {
-           int ultimaMesa = getCantMesas();
-           for (int i = 0; i < cantidad; i++) {
-            ultimaMesa = ultimaMesa + 1;   
-           
-            // the mysql insert statement
-            String query = " insert into estadomesa (num_mesa, estado)"
-                    + " values (?, ? )";
 
-            // create the mysql insert preparedstatement
-            PreparedStatement preparedStmt = cx.prepareStatement(query);
-            
-            preparedStmt.setInt(1, ultimaMesa);
-            preparedStmt.setInt(2, 1);
+    public void insertTables(int cantidad) {
+        try {
+            int ultimaMesa = getCantMesas();
+            for (int i = 0; i < cantidad; i++) {
+                ultimaMesa = ultimaMesa + 1;
 
-            // execute the preparedstatement
-            preparedStmt.execute();
-           }
-           
-            
+                // the mysql insert statement
+                String query = " insert into estadomesa (num_mesa, estado)"
+                        + " values (?, ? )";
+
+                // create the mysql insert preparedstatement
+                PreparedStatement preparedStmt = cx.prepareStatement(query);
+
+                preparedStmt.setInt(1, ultimaMesa);
+                preparedStmt.setInt(2, 1);
+
+                // execute the preparedstatement
+                preparedStmt.execute();
+            }
+
         } catch (Exception ex) {
             System.out.println("Fallo la inserción" + ex.getMessage());
         }
 
+    }
+
+    public int getTableStatus(int table) throws SQLException {
+        cx = conectar();
+        Statement stmt = cx.createStatement();
+
+        String consulta = "select * from estadomesa where num_mesa = " + table + ";";
+        System.out.println(consulta);
+        ResultSet rs = stmt.executeQuery(consulta);
+
+        try {
+            while (rs.next()) {                
+                 System.out.println("antes de estado");
+                int estado = Integer.parseInt(rs.getString("estado"));
+                System.out.println("estado= "+estado);
+               return estado;
+            }
+           
+            
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ignore) {
+                System.out.println("Exeption on login: " + ignore.getMessage());
+            }
+        }
+        return 0;
         
+
     }
 }

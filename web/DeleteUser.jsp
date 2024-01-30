@@ -10,11 +10,11 @@
 <%
     ConnectionMysql mysql = new ConnectionMysql("pos");
     int codeUser = Integer.parseInt(request.getParameter("deleteUser"));
-    // Validar el codigo de la computadora
+    
     if (mysql.deleteUser(codeUser)) {
         
         
-        response.sendRedirect("User.jsp"); // Página despues de eliminar computadora
+        response.sendRedirect("User.jsp"); 
     } else {
         // fallo
         out.println("<script>alert('Este objeto no se puede eliminar'); window.location.href='User.jsp';</script>");
