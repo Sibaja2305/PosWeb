@@ -63,10 +63,10 @@
                 for (int i = 0; i < mesas; i++) {
                     if (mysql.getTableStatus(i + 1) == 1) {
                         dirJSP = "Order.jsp";
-                        srcImage = "image/businessman.png";
+                        srcImage = "image/table.png";
                     } else {
                         dirJSP = "ViewOrder.jsp";
-                        srcImage = "image/4848455_chairs_dining_dinner_furniture_household_icon.png";
+                        srcImage = "image/bill.png";
                     }
 
             %>

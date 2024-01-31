@@ -25,7 +25,7 @@
 
                     <div class="logoContainer">
                         <img style="width: 50px;" src="image/businessman.png" alt="Imagen de ilustratiba"/>
-                        <a href="1.jsp" class="logo"  >Administrador</a> 
+                        <a href="Admin.jsp"" class="logo"  >Administrador</a> 
                     </div>
 
                     <input type="checkbox" id="menu">
@@ -34,7 +34,7 @@
                     </label>
                     <nav class="navbar">
                         <ul>
-                            <li><a href="Admin.jsp">Inicio</a></li>
+                            <li><a href="Mesas.jsp">Mesas</a></li>
                             <li><a href="Menu.jsp">Menu</a></li>
                             <li><a href="Inventory.jsp">Inventario</a></li>
                             <li><a href="Report.jsp">Reporte</a></li>

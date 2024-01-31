@@ -13,6 +13,7 @@
     int cantidad = mysql.getCantMesas();
     %>
     <link href="estilo.css" rel="stylesheet" type="text/css"/>
+    <link href="bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <script src="PosScript.js" type="text/javascript"></script>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -49,16 +50,16 @@
                 
             </div>
         </header>
-        <h1>Mesas</h1>
-      <form method="post" action="CantTablesValidation.jsp">
+        <h1 style="margin-left: 10px" >Mesas</h1>
+        <form style="margin-left: 10px; margin-top: 15px" method="post" action="CantTablesValidation.jsp">
           
                 <div class="form-group">
                     <label class="labels">Cantidad de Mesas:</label>
-                    <input type="text" class="form-control" name="CantMesas" placeholder="<%=cantidad%>" required Style ="width: 75%; outline: none; border: none; border-bottom: solid #51585e" >
+                    <input type="text" class="form-control" name="CantMesas" placeholder="<%=cantidad%>" required Style ="width: 25%; outline: none; border: none; border-bottom: solid #51585e" >
                 </div>
              
                 
-             <div style="float: left">
+             <div style="float: left; margin-top: 10px">
                  <button type="submit" class="btn btn-primary">Guardar</button>
              </div>
          
