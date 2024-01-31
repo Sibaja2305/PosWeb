@@ -25,7 +25,7 @@
     </style>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Mesero</title>
     </head>
     <body>
         <header>
@@ -72,7 +72,7 @@
             %>
             <div  style="margin: 30px; text-align: center">
                 <label>mesa <%=i + 1%></label>
-                <form action="action" method="POST">
+                <form action="<%=dirJSP%>" method="POST">
                     <button class="boton" type="submit" name="mesa" value="Mesa <%= i + 1%>">
                         <img src="<%=srcImage%>" alt=""/>
                     </button>

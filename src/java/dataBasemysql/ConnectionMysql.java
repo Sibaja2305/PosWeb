@@ -8,6 +8,7 @@ package dataBasemysql;
  *
  * @author Hp EliteBook
  */
+import Clases.Inventary;
 import Clases.User;
 import java.sql.Connection;
 import java.sql.Date;
@@ -27,7 +28,7 @@ public class ConnectionMysql {
     String bd = "world";
     String url = "jdbc:mysql://localhost:3306/";
     String usuario = "root";
-    String contraseña = "Alfaher1503!";
+    String contraseña = "Racataca2305.";
     String driver = "com.mysql.cj.jdbc.Driver";
     Connection cx;
 
@@ -293,7 +294,62 @@ public class ConnectionMysql {
             }
         }
         return 0;
-        
+       
+    }
+    public ArrayList<Inventary> getFood() throws SQLException {
+        Statement stmt = cx.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM inventario Where categoria = 1;");
+        ArrayList<Inventary> inventaries = new ArrayList<>();
+        try {
+            while (rs.next()) {
 
+                int id = Integer.parseInt(rs.getString("id_Producto"));
+                String nombre = rs.getString("nombre");
+                double price = Double.parseDouble(rs.getString("precio"));
+                int category = Integer.parseInt(rs.getString("categoria"));
+
+                Inventary inventary = new Inventary(id, nombre, price, category);
+
+                inventaries.add(inventary);
+
+            }
+            return inventaries;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+
+        } finally {
+           
+
+        }
+    }
+    public ArrayList<Inventary> getDrink() throws SQLException {
+        Statement stmt = cx.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM inventario Where categoria = 2;");
+        ArrayList<Inventary> inventaries = new ArrayList<>();
+        try {
+            while (rs.next()) {
+
+                int id = Integer.parseInt(rs.getString("id_Producto"));
+                String nombre = rs.getString("nombre");
+                double price = Double.parseDouble(rs.getString("precio"));
+                int category = Integer.parseInt(rs.getString("categoria"));
+
+                Inventary inventary = new Inventary(id, nombre, price, category);
+
+                inventaries.add(inventary);
+
+            }
+            return inventaries;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+
+        } finally {
+            rs.close();
+
+        }
     }
 }
