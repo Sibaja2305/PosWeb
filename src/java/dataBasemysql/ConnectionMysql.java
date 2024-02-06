@@ -59,6 +59,7 @@ public class ConnectionMysql {
             Logger.getLogger(ConnectionMysql.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cx;
+        
 
     }
 
@@ -351,5 +352,52 @@ public class ConnectionMysql {
             rs.close();
 
         }
+    }
+     public boolean orderExist(int code, int table) throws SQLException {
+        cx = conectar();
+        Statement stmt = cx.createStatement();
+        String consulta = "select * from pedido_temp where id_Producto ='" + code + "' and num_mesa = '" + table + ";";
+        System.out.println(consulta);
+        ResultSet rs = stmt.executeQuery(consulta);
+
+        try {
+            if (rs.next()) {
+                return false;
+            } else {
+                return true;
+            }
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ignore) {
+                System.out.println("Exeption on login: " + ignore.getMessage());
+            }
+        }
+
+    }
+     public boolean insertOrder(String userName, String password, int range) {
+
+        try {
+
+            // the mysql insert statement
+            String query = " insert into usuario (Usuario, Contraseña, Rango)"
+                    + " values (?, ?, ? )";
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = cx.prepareStatement(query);
+            preparedStmt.setString(1, userName);
+            preparedStmt.setString(2, password);
+            preparedStmt.setInt(3, range);
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+
+            cx.close();
+            return true;
+        } catch (Exception ex) {
+            System.out.println("Fallo la inserción" + ex.getMessage());
+        }
+
+        return false;
     }
 }

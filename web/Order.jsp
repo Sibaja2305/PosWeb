@@ -95,11 +95,13 @@
                     </thead>
                     <tbody>
                         <%
-
+                            int table = Integer.parseInt(request.getParameter("mesa"));
+                            System.out.println("table "+ table); 
                             ConnectionMysql mysql = new ConnectionMysql("pos");
                             ArrayList<Inventary> menu = mysql.getFood();
                             for (int i = 0; i < menu.size(); i++) {
-
+                        
+                            
 
                         %>
                         <tr>
@@ -108,13 +110,21 @@
                             <td><%=menu.get(i).getPrice()%></td>
                             <td hidden><%=menu.get(i).getCategory()%></td>
                             <td>
-                                <form  action="selectOrder.jsp" id="selected" method="post">
+                                <form  action="SelectOrder.jsp" id="selected" method="post">
                                     <input 
                                         hidden="true"
                                         type="text" 
                                         name="select" 
                                         id="id" 
-                                        value="">
+                                        value="<%=menu.get(i).getId_Product() 
+                                        %>">
+                                    <input 
+                                        hidden="true"
+                                        type="text" 
+                                        name="table" 
+                                        id="id" 
+                                        value="<%=table%>">
+                                    
                                     <input                                        
                                         
                                         type="submit"                                                                              
@@ -159,7 +169,14 @@
                                         type="text" 
                                         name="select" 
                                         id="id" 
-                                        value="">
+                                        value="<%=drink.get(i).getId_Product() 
+                                        %>">
+                                    <input 
+                                        hidden="true"
+                                        type="text" 
+                                        name="table" 
+                                        id="id" 
+                                        value="<%=table%>">
                                     <input                                        
                                          
                                         type="submit"                                                                              
@@ -192,20 +209,20 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td value="name" >pollo</td>
-                            <td value="quantit">
+                            <td value="name" ></td>
+                            <td value="quantity">
                                 <button type="button" id='disminuir' onclick="disminuir()">-</button>
                                 <input style="width: 25px;" type='text' id="cantidad" name="quantity" value="0">
                                 <button type="button" id='aumentar' onclick="aumentar()">+</button>
                             </td>
-                            <td value="price">1200</td>
+                            <td value="price"></td>
                             <td>
 
                                 <div style="text-align: center; max-width: 30px; ">
                                     <textarea name="comment" rows="1" cols="25" placeholder="escriba su comentario aqui"></textarea>
                                 </div>
                             </td>
-                            <td value="category" hidden>comida</td>
+                            <td value="category" hidden></td>
                             <td>
                                 <form  action="DeleteOrden.jsp" id="delete" method="post">
                                     <input 
