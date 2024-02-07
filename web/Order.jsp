@@ -1,7 +1,7 @@
 <%-- 
-    Document   : pedido
-    Created on : 30/01/2024, 05:43:13 PM
-    Author     : user
+Document   : pedido
+Created on : 30/01/2024, 05:43:13 PM
+Author     : user
 --%>
 
 <%@page import="Clases.Inventary"%>
@@ -17,11 +17,11 @@
         <style>
 
             .c{
-                
-               display: flex;
-               flex-wrap: wrap;
-               
-               
+
+                display: flex;
+                flex-wrap: wrap;
+
+
 
             }
             /* Estilo para cada columna */
@@ -35,7 +35,7 @@
             .tabla {
                 border-collapse: collapse;
                 width: 100%;
-                
+
             }
 
             table, th, td {
@@ -51,28 +51,59 @@
                 height: 40px;
 
             }
-           
+
 
         </style>
 
+
         <script>
-            var inicio = 0;
-
-            document.addEventListener('DOMContentLoaded', function () {
-                document.getElementById('aumentar').addEventListener('click', aumentar);
-                document.getElementById('disminuir').addEventListener('click', disminuir);
-            });
-
-            function aumentar() {
-                var cantidad = document.getElementById('cantidad');
-                cantidad.value = ++inicio;
+            function aumentar(rowId) {
+                var cantidad = document.getElementById('cantidad_' + rowId);
+                cantidad.value = parseInt(cantidad.value) + 1;
             }
 
-            function disminuir() {
-                var cantidad = document.getElementById('cantidad');
-                if (inicio > 0) {
-                    cantidad.value = --inicio;
+            function disminuir(rowId) {
+                var cantidad = document.getElementById('cantidad_' + rowId);
+                if (parseInt(cantidad.value) > 0) {
+                    cantidad.value = parseInt(cantidad.value) - 1;
                 }
+            }
+            function aumentarDrink(rowId) {
+                var cantidadDrink = document.getElementById('cantidadDrink_' + rowId);
+                cantidadDrink.value = parseInt(cantidadDrink.value) + 1;
+            }
+
+            function disminuirDrink(rowId) {
+                var cantidadDrink = document.getElementById('cantidadDrink_' + rowId);
+                if (parseInt(cantidadDrink.value) > 0) {
+                    cantidadDrink.value = parseInt(cantidadDrink.value) - 1;
+                }
+            }
+        </script>
+        <script>
+            function captureData(rowId) {
+                var comment = document.querySelector('#miTabla tbody tr:nth-child(' + (parseInt(rowId) + 1) + ') textarea[name="comment"]').value;
+                var quantity = document.getElementById('cantidad_' + rowId).value;
+
+                // Actualiza los valores de los campos ocultos con el comentario y la cantidad
+                document.getElementById('comment_' + rowId).value = comment;
+                document.getElementById('quantity_' + rowId).value = quantity;
+
+                // Envía el formulario
+                document.getElementById('form_' + rowId).submit();
+            }
+        </script>
+        <script>
+            function captureDataDrink(rowId) {
+                var comment = document.querySelector('#miTabla tbody tr:nth-child(' + (parseInt(rowId) + 1) + ') textarea[name="commentDrink"]').value;
+                var quantity = document.getElementById('cantidadDrink_' + rowId).value;
+
+                // Actualiza los valores de los campos ocultos con el comentario y la cantidad
+                document.getElementById('comment_' + rowId).value = comment;
+                document.getElementById('quantity_' + rowId).value = quantity;
+
+                // Envía el formulario
+                document.getElementById('form_' + rowId).submit();
             }
         </script>
 
@@ -90,46 +121,48 @@
                             <th hidden>id_producto</th>
                             <th>Nombre</th>
                             <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Comentario</th>
                             <th hidden>Categoría</th>
                         </tr>
                     </thead>
                     <tbody>
                         <%
                             int table = Integer.parseInt(request.getParameter("mesa"));
-                            System.out.println("table "+ table); 
+                            System.out.println("table " + table);
                             ConnectionMysql mysql = new ConnectionMysql("pos");
                             ArrayList<Inventary> menu = mysql.getFood();
                             for (int i = 0; i < menu.size(); i++) {
-                        
-                            
+
 
                         %>
                         <tr>
                             <td hidden><%=menu.get(i).getId_Product()%></td>
                             <td><%=menu.get(i).getName()%></td>
                             <td><%=menu.get(i).getPrice()%></td>
+                            <td
+                                value="quantity">
+                                <button type="button" id='disminuir' onclick="disminuir(<%=i%>)">-</button>
+                                <input style="width: 25px;" type='text' id="cantidad_<%=i%>" name="quantity" value="0">
+                                <button type="button" id='aumentar' onclick="aumentar(<%=i%>)">+</button>
+
+                            </td>
+                            <td>
+                                <div style="text-align: center; max-width: 30px; ">
+                                    <textarea name="comment" rows="1" cols="15" placeholder="escriba su comentario aqui"></textarea>
+                                </div>
+                            </td>
                             <td hidden><%=menu.get(i).getCategory()%></td>
                             <td>
-                                <form  action="SelectOrder.jsp" id="selected" method="post">
-                                    <input 
-                                        hidden="true"
-                                        type="text" 
-                                        name="select" 
-                                        id="id" 
-                                        value="<%=menu.get(i).getId_Product() 
-                                        %>">
-                                    <input 
-                                        hidden="true"
-                                        type="text" 
-                                        name="table" 
-                                        id="id" 
-                                        value="<%=table%>">
-                                    
-                                    <input                                        
-                                        
-                                        type="submit"                                                                              
-                                        value="Seleccionar" >
+                            <td>
+                                <form action="SelectOrder.jsp" method="post" id="form_<%=i%>">
+                                    <input type="hidden" name="comment" id="comment_<%=i%>" value="">
+                                    <input type="hidden" name="quantity" id="quantity_<%=i%>" value="">
+                                    <input type="hidden" name="select" value="<%=menu.get(i).getId_Product()%>">
+                                    <input type="hidden" name="table" value="<%=table%>">
+                                    <input type="button" onclick="captureData('<%=i%>')" value="Seleccionar">
                                 </form>
+                            </td>
                             </td>
 
                         </tr>
@@ -146,6 +179,8 @@
                             <th hidden>id_producto</th>
                             <th>Nombre</th>
                             <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Comentario</th>
                             <th hidden>Categoría</th>
                         </tr>
                     </thead>
@@ -161,26 +196,25 @@
                             <td hidden><%=drink.get(i).getId_Product()%></td>
                             <td><%=drink.get(i).getName()%></td>
                             <td><%=drink.get(i).getPrice()%></td>
+                            <td
+                                value="quantity">
+                                <button type="button" id='disminuirDrink' onclick="disminuirDrink(<%=i%>)">-</button>
+                                <input style="width: 25px;" type='text' id="cantidadDrink_<%=i%>" name="quantity" value="0">
+                                <button type="button" id='aumentarDrink' onclick="aumentarDrink(<%=i%>)">+</button>
+                            </td>
+                            <td>
+                                <div style="text-align: center; max-width: 30px; ">
+                                    <textarea name="commentDrink" rows="1" cols="15" placeholder="escriba su comentario aqui"></textarea>
+                                </div>
+                            </td>
                             <td hidden><%=drink.get(i).getCategory()%></td>
                             <td>
-                                <form  action="selectOrder.jsp" id="selected" method="post">
-                                    <input 
-                                        hidden="true"
-                                        type="text" 
-                                        name="select" 
-                                        id="id" 
-                                        value="<%=drink.get(i).getId_Product() 
-                                        %>">
-                                    <input 
-                                        hidden="true"
-                                        type="text" 
-                                        name="table" 
-                                        id="id" 
-                                        value="<%=table%>">
-                                    <input                                        
-                                         
-                                        type="submit"                                                                              
-                                        value="Seleccionar" >
+                                 <form action="SelectOrder.jsp" method="post" id="form_<%=i%>">
+                                    <input type="hidden" name="comment" id="comment_<%=i%>" value="">
+                                    <input type="hidden" name="quantity" id="quantity_<%=i%>" value="">
+                                    <input type="hidden" name="select" value="<%=menu.get(i).getId_Product()%>">
+                                    <input type="hidden" name="table" value="<%=table%>">
+                                    <input type="button" onclick="captureDataDrink('<%=i%>')" value="Seleccionar">
                                 </form>
                             </td>
 
@@ -192,7 +226,7 @@
             </div>
         </div>
 
-                <div style="margin-left: 20px;">
+        <div style="margin-left: 20px;">
             <h2>Orden</h2>
             <form name="order" action="validationOrder.jsp" method="POST">
 
@@ -211,16 +245,12 @@
                         <tr>
                             <td value="name" ></td>
                             <td value="quantity">
-                                <button type="button" id='disminuir' onclick="disminuir()">-</button>
-                                <input style="width: 25px;" type='text' id="cantidad" name="quantity" value="0">
-                                <button type="button" id='aumentar' onclick="aumentar()">+</button>
+
                             </td>
                             <td value="price"></td>
                             <td>
 
-                                <div style="text-align: center; max-width: 30px; ">
-                                    <textarea name="comment" rows="1" cols="25" placeholder="escriba su comentario aqui"></textarea>
-                                </div>
+
                             </td>
                             <td value="category" hidden></td>
                             <td>
