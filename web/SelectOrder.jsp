@@ -10,25 +10,30 @@
     ConnectionMysql mysql = new ConnectionMysql("pos");
     int idProduct = Integer.parseInt(request.getParameter("select"));
     int table = Integer.parseInt(request.getParameter("table"));
-    int cantidad = Integer.parseInt(request.getParameter("quantity"));
-    String comentario =request.getParameter("comment");
-    
+    int quantity = Integer.parseInt(request.getParameter("quantity"));
+    String comment = request.getParameter("comment");
+    String name = request.getParameter("name");
+    int category = Integer.parseInt(request.getParameter("category"));
+    double price = Double.parseDouble(request.getParameter("price"));
+    price = price * quantity;
+
     System.out.println("id selecionado = " + idProduct);
     System.out.println("mesa selecionado = " + table);
-    System.out.println("cantidad "+ cantidad);
-    System.out.println("comentario"+ comentario);
-    /*
-     * if (mysql.orderExist(idProduct, table)) {
-        
-        if (mysql.orderExist(idProduct, table)) {
-                
-            }
-        
-        response.sendRedirect("User.jsp"); 
+    System.out.println("cantidad " + quantity);
+    System.out.println("comentario" + comment);
+
+    if (mysql.orderExist(idProduct, table)) {
+
+        if (mysql.insertOrder(table, idProduct, name, quantity, price, comment, category)) {
+            response.sendRedirect("Order.jsp?table="+table);
+        }else{
+        out.println("<script>alert('No fue posible añadir este elemento a la orden'); window.location.href='Order.jsp';</script>");
+    }
+
     } else {
         // fallo
-        out.println("<script>alert('Este objeto no se puede eliminar'); window.location.href='User.jsp';</script>");
+        out.println("<script>alert('Este elemento ya esta en la orden'); window.location.href='Order.jsp';</script>");
     }
-    */
-     
+
+
 %>

@@ -80,19 +80,7 @@ Author     : user
                 }
             }
         </script>
-        <script>
-            function captureData(rowId) {
-                var comment = document.querySelector('#miTabla tbody tr:nth-child(' + (parseInt(rowId) + 1) + ') textarea[name="comment"]').value;
-                var quantity = document.getElementById('cantidad_' + rowId).value;
-
-                // Actualiza los valores de los campos ocultos con el comentario y la cantidad
-                document.getElementById('comment_' + rowId).value = comment;
-                document.getElementById('quantity_' + rowId).value = quantity;
-
-                // Envía el formulario
-                document.getElementById('form_' + rowId).submit();
-            }
-        </script>
+       
         <script>
             function captureDataDrink(rowId) {
                 var comment = document.querySelector('#miTabla tbody tr:nth-child(' + (parseInt(rowId) + 1) + ') textarea[name="commentDrink"]').value;
@@ -106,6 +94,7 @@ Author     : user
                 document.getElementById('form_' + rowId).submit();
             }
         </script>
+      
 
     </head>
 
@@ -128,7 +117,7 @@ Author     : user
                     </thead>
                     <tbody>
                         <%
-                            int table = Integer.parseInt(request.getParameter("mesa"));
+                            int table = Integer.parseInt(request.getParameter("table"));
                             System.out.println("table " + table);
                             ConnectionMysql mysql = new ConnectionMysql("pos");
                             ArrayList<Inventary> menu = mysql.getFood();
@@ -136,6 +125,20 @@ Author     : user
 
 
                         %>
+                         <script>
+            function captureData(rowId) {
+               
+                var comment = document.querySelector('#miTabla tbody tr:nth-child(' + (parseInt(rowId) + 1) + ') textarea[name="comment"]').value;
+                var quantity = document.getElementById('cantidad_' + rowId).value;
+
+                // Actualiza los valores de los campos ocultos con el comentario y la cantidad
+                document.getElementById('comment_' + rowId).value = comment;
+                document.getElementById('quantity_' + rowId).value = quantity;
+
+                // Envía el formulario
+                document.getElementById('form_' + rowId).submit();
+            }
+        </script>
                         <tr>
                             <td hidden><%=menu.get(i).getId_Product()%></td>
                             <td><%=menu.get(i).getName()%></td>
@@ -143,7 +146,7 @@ Author     : user
                             <td
                                 value="quantity">
                                 <button type="button" id='disminuir' onclick="disminuir(<%=i%>)">-</button>
-                                <input style="width: 25px;" type='text' id="cantidad_<%=i%>" name="quantity" value="0">
+                                <input style="width: 40px;" type='text' id="cantidad_<%=i%>" name="quantity" value="0">
                                 <button type="button" id='aumentar' onclick="aumentar(<%=i%>)">+</button>
 
                             </td>
@@ -153,14 +156,17 @@ Author     : user
                                 </div>
                             </td>
                             <td hidden><%=menu.get(i).getCategory()%></td>
-                            <td>
+                          
                             <td>
                                 <form action="SelectOrder.jsp" method="post" id="form_<%=i%>">
                                     <input type="hidden" name="comment" id="comment_<%=i%>" value="">
                                     <input type="hidden" name="quantity" id="quantity_<%=i%>" value="">
                                     <input type="hidden" name="select" value="<%=menu.get(i).getId_Product()%>">
+                                    <input type="hidden" name="name" value="<%=menu.get(i).getName()%>">
+                                    <input type="hidden" name="category" value="<%=menu.get(i).getCategory()%>">
+                                    <input type="hidden" name="price" value="<%=menu.get(i).getPrice()%>">
                                     <input type="hidden" name="table" value="<%=table%>">
-                                    <input type="button" onclick="captureData('<%=i%>')" value="Seleccionar">
+                                    <input type="button" onclick="captureData<%=i%>('<%=i%>')" value="Seleccionar">
                                 </form>
                             </td>
                             </td>

@@ -28,7 +28,7 @@ public class ConnectionMysql {
     String bd = "world";
     String url = "jdbc:mysql://localhost:3306/";
     String usuario = "root";
-    String contraseña = "Racataca2305.";
+    String contraseña = "Supercell07*";
     String driver = "com.mysql.cj.jdbc.Driver";
     Connection cx;
 
@@ -356,7 +356,7 @@ public class ConnectionMysql {
      public boolean orderExist(int code, int table) throws SQLException {
         cx = conectar();
         Statement stmt = cx.createStatement();
-        String consulta = "select * from pedido_temp where id_Producto ='" + code + "' and num_mesa = '" + table + ";";
+        String consulta = "select * from pedido_temp where id_Producto ='" + code + "' and num_mesa = " + table + ";";
         System.out.println(consulta);
         ResultSet rs = stmt.executeQuery(consulta);
 
@@ -367,27 +367,26 @@ public class ConnectionMysql {
                 return true;
             }
         } finally {
-            try {
-                rs.close();
-            } catch (SQLException ignore) {
-                System.out.println("Exeption on login: " + ignore.getMessage());
-            }
         }
 
     }
-     public boolean insertOrder(String userName, String password, int range) {
+     public boolean insertOrder(int table, int idProduct, String name, int quantity, double price, String comment, int category ) {
 
         try {
 
             // the mysql insert statement
-            String query = " insert into usuario (Usuario, Contraseña, Rango)"
-                    + " values (?, ?, ? )";
+            String query = " insert into pedido_temp (num_mesa, id_producto, nombre, cantidad, precio, comentario, categoria)"
+                    + " values (?, ?, ?, ?, ?, ?, ? )";
 
             // create the mysql insert preparedstatement
             PreparedStatement preparedStmt = cx.prepareStatement(query);
-            preparedStmt.setString(1, userName);
-            preparedStmt.setString(2, password);
-            preparedStmt.setInt(3, range);
+            preparedStmt.setInt(1, table);
+            preparedStmt.setInt(2, idProduct);
+            preparedStmt.setString(3, name);
+            preparedStmt.setInt(4, quantity);
+            preparedStmt.setDouble(5, price);
+            preparedStmt.setString(6, comment);
+            preparedStmt.setInt(7, category);
 
             // execute the preparedstatement
             preparedStmt.execute();

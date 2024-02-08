@@ -76,7 +76,7 @@
                 <label>mesa <%=i + 1%></label>
                 <form action="<%=dirJSP%>" method="POST">
                    
-                    <button class="boton" type="submit" name="mesa" value="<%= i + 1%>">
+                    <button class="boton" type="submit" name="table" value="<%= i + 1%>">
                         <img src="<%=srcImage%>" alt=""/>
                     </button>
 
