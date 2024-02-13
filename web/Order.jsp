@@ -4,6 +4,7 @@ Created on : 30/01/2024, 05:43:13 PM
 Author     : user
 --%>
 
+<%@page import="Clases.Order"%>
 <%@page import="Clases.Inventary"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dataBasemysql.ConnectionMysql"%>
@@ -38,6 +39,12 @@ Author     : user
                 padding: 8px;
                 text-align: center;
             }
+            .hola{
+                border: 1px solid black;
+                padding: 8px;
+                text-align: center;
+            }
+
 
             .boton {
                 margin-top: 20px;
@@ -121,6 +128,7 @@ Author     : user
                             ConnectionMysql mysql = new ConnectionMysql("pos");
                             ArrayList<Inventary> menu = mysql.getFood();
                             for (int i = 0; i < menu.size(); i++) {%>
+
                         <tr>
                             <td hidden><%= menu.get(i).getId_Product()%></td>
                             <td><%= menu.get(i).getName()%></td>
@@ -204,57 +212,59 @@ Author     : user
                 </table>
             </div>
         </div>
-        <div style="margin-left: 20px;">
-            <h2>Orden</h2>
-            <form name="order" action="validationOrder.jsp" method="POST">
 
-                <table style="width: 94%;" border="1">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Cantidad</th>
-                            <th>Precio</th>
-                            <th>Comentario</th>
-                            <th hidden>Categoria</th>
+<%
+ArrayList<Order> order = mysql.getOrder(table);
+%>
+        <h2>Orden</h2>
+       <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th hidden="true" class="text-center">id_pedido</th>
+            <th hidden="true" class="text-center">num_mesa</th>
+            <th hidden="true" class="text-center">id_producto</th>
+            <th class="text-center">nombre</th>
+            <th class="text-center">cantidad</th>
+            <th class="text-center">precio</th>
+            <th class="text-center">comentario</th>
+            <th hidden="true" class="text-center">categoria</th>
+            <th class="text-center">eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (int i = 0; i < order.size(); i++) { %>
+            <tr>
+                <td hidden="true" class="align-middle text-center"><%= order.get(i).getIdOrder() %></td>
+                <td hidden="true" class="align-middle text-center"><%= order.get(i).getNumTable() %></td>
+                <td hidden="true" class="align-middle text-center"><%= order.get(i).getIdProduct() %></td>
+                <td class="align-middle text-center"><%= order.get(i).getNombre() %></td>
+                <td class="align-middle text-center"><%= order.get(i).getQuantity() %></td>
+                <td class="align-middle text-center"><%= order.get(i).getPrice() %></td>
+                <td class="align-middle text-center"><%= order.get(i).getComment() %></td>
+                <td hidden="true" class="align-middle text-center"><%= order.get(i).getCategory() %></td>
+                <td class="align-middle text-center">
+                    <form action="DeleteOrder.jsp">
+                        <input hidden="true" type="text" name="selectId" value="<%= order.get(i).getIdOrder() %>">
+                        <input class="btn-danger" type="submit" value="eliminar">
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td value="name" ></td>
-                            <td value="quantity">
-
-                            </td>
-                            <td value="price"></td>
-                            <td>
+<form action="ConfirmOrder.jsp" id="confirmForm" method="post">
+    <% for (int i = 0; i < order.size(); i++) { %>
+        <input hidden="true" type="text" name="deleteComputer" value="<%= order.get(i).getNumTable() %>">
+    <% } %>
+    <input class="btn-dark" type="submit" value="Confirmar">
+</form>
 
 
-                            </td>
-                            <td value="category" hidden></td>
-                            <td>
-                                <form  action="DeleteOrden.jsp" id="delete" method="post">
-                                    <input 
-                                        hidden="true"
-                                        type="text" 
-                                        name="Delete" 
-                                        id="id" 
-                                        value="">
-                                    <button type="submit" style="background: none; border: none; padding: 0; margin-left: 20px; cursor: pointer;">
-                                        <img src="image/x.png" alt="Eliminar"/>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
 
-                    </tbody>
-                </table>
-
-                <input class="boton" type="submit" value="confirmar pedido" name="confirm" />
-            </form>
-        </div>
 
     </body>
 
-</html>
-</body>
+
+
 </html>

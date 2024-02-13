@@ -9,6 +9,7 @@ package dataBasemysql;
  * @author Hp EliteBook
  */
 import Clases.Inventary;
+import Clases.Order;
 import Clases.User;
 import java.sql.Connection;
 import java.sql.Date;
@@ -28,7 +29,7 @@ public class ConnectionMysql {
     String bd = "world";
     String url = "jdbc:mysql://localhost:3306/";
     String usuario = "root";
-    String contraseña = "Supercell07*";
+    String contraseña = "Racataca2305.";
     String driver = "com.mysql.cj.jdbc.Driver";
     Connection cx;
 
@@ -398,5 +399,37 @@ public class ConnectionMysql {
         }
 
         return false;
+    }
+     public ArrayList<Order> getOrder(int table) throws SQLException {
+        Statement stmt = cx.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM pedido_temp WHERE num_mesa = '" + table + "';");
+        ArrayList<Order> orders = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                int idOrder = Integer.parseInt(rs.getString("id_pedido"));
+                int numTable = Integer.parseInt(rs.getString("num_mesa"));
+                int idProduct = Integer.parseInt(rs.getString("id_producto"));
+                 String name = rs.getString("nombre");
+                int quantity = Integer.parseInt(rs.getString("cantidad"));
+                double price = Double.parseDouble(rs.getString("precio"));
+                String comment = rs.getString("comentario");
+                
+                int category = Integer.parseInt(rs.getString("categoria"));
+
+                Order order = new Order(idOrder, numTable, idProduct, name, quantity, price, comment, category);
+
+                orders.add(order);
+
+            }
+            return orders;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+
+        } finally {
+            rs.close();
+
+        }
     }
 }
