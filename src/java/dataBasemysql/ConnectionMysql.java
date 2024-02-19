@@ -432,4 +432,123 @@ public class ConnectionMysql {
 
         }
     }
+       public boolean deleteOrder(String idOrder) {
+        try {
+
+            String query = "delete from pedido_temp where id_pedido = ?";
+            PreparedStatement preparedStmt = cx.prepareStatement(query);
+            preparedStmt.setString(1, idOrder);
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+
+            cx.close();
+            return true;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return false;
+        }
+
+    }
+        public boolean insertOrder(int table) {
+
+        try {
+
+            // the mysql insert statement
+            String query = " insert into pedido (id_pedido, num_mesa, id_producto, nombre, cantidad, precio, comentario, categoria) "
+                    + "SELECT id_pedido, num_mesa, id_producto, nombre, cantidad, precio, comentario, categoria FROM pedido_temp WHERE num_mesa = "+table+";";
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = cx.prepareStatement(query);
+            
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+
+          
+            return true;
+        } catch (Exception ex) {
+            System.out.println("Fallo la inserción" + ex.getMessage());
+        }
+
+        return false;
+    }
+        public boolean deleteOrderTemp(int table) {
+        try {
+
+            String query = "delete from pedido_temp where num_mesa = ?";
+            PreparedStatement preparedStmt = cx.prepareStatement(query);
+            preparedStmt.setInt(1, table);
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+
+           
+            return true;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return false;
+        }
+
+    }
+        public boolean editStateTable(int table) {
+
+        try {
+
+            String query = "UPDATE estadomesa "
+                    + "     SET estado = 2"
+                    + "     WHERE num_mesa = ?;";
+
+            PreparedStatement preparedStmt = cx.prepareStatement(query);
+
+            preparedStmt.setInt(1, table);
+
+            // execute the preparedstatement
+            preparedStmt.executeUpdate();
+
+            cx.close();
+         return true;
+        } catch (Exception e) {
+            
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return false;
+
+        }
+       
+        
+    }
+        public ArrayList<Order> getViewOrder(int table) throws SQLException {
+        Statement stmt = cx.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM pedido WHERE num_mesa = '" + table + "';");
+        ArrayList<Order> orders = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                int idOrder = Integer.parseInt(rs.getString("id_pedido"));
+                int idProduct = Integer.parseInt(rs.getString("id_producto"));
+                 String name = rs.getString("nombre");
+                int quantity = Integer.parseInt(rs.getString("cantidad"));
+                double price = Double.parseDouble(rs.getString("precio"));
+                String comment = rs.getString("comentario");
+                
+               
+
+                Order order = new Order(idOrder, idProduct, name, quantity, price, comment);
+
+                orders.add(order);
+
+            }
+            return orders;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+
+        } finally {
+            rs.close();
+
+        }
+    }
 }

@@ -215,6 +215,8 @@ Author     : user
 
 <%
 ArrayList<Order> order = mysql.getOrder(table);
+if (!order.isEmpty()) {
+        
 %>
         <h2>Orden</h2>
        <table class="table table-bordered">
@@ -244,7 +246,8 @@ ArrayList<Order> order = mysql.getOrder(table);
                 <td hidden="true" class="align-middle text-center"><%= order.get(i).getCategory() %></td>
                 <td class="align-middle text-center">
                     <form action="DeleteOrder.jsp">
-                        <input hidden="true" type="text" name="selectId" value="<%= order.get(i).getIdOrder() %>">
+                        <input hidden="true" type="text" name="deleteOrder" value="<%= order.get(i).getIdOrder() %>">
+                        <input hidden="true" type="text" name="table" value="<%= order.get(i).getNumTable()%>">
                         <input class="btn-danger" type="submit" value="eliminar">
                     </form>
                 </td>
@@ -255,9 +258,10 @@ ArrayList<Order> order = mysql.getOrder(table);
 
 <form action="ConfirmOrder.jsp" id="confirmForm" method="post">
     <% for (int i = 0; i < order.size(); i++) { %>
-        <input hidden="true" type="text" name="deleteComputer" value="<%= order.get(i).getNumTable() %>">
+        <input hidden="true" type="text" name="confirm" value="<%= order.get(i).getNumTable() %>">
     <% } %>
     <input class="btn-dark" type="submit" value="Confirmar">
+    <%}%>
 </form>
 
 

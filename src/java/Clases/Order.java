@@ -32,6 +32,16 @@ public class Order {
         this.category = category;
     }
 
+    public Order(int idOrder, int idProduct, String nombre, int quantity, double price, String comment) {
+        this.idOrder = idOrder;
+        this.idProduct = idProduct;
+        this.nombre = nombre;
+        this.quantity = quantity;
+        this.price = price;
+        this.comment = comment;
+    }
+    
+
     /**
      * @return the idOrder
      */
