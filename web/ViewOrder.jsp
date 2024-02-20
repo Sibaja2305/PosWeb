@@ -47,13 +47,15 @@
                                 <th>Cantidad</th>
                                 <th>Precio</th>
                                 <th>Comentario</th>
+                                 <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody>
                             <%
                                 for (int i = 0; i < view.size(); i++) {
 
-
+                              String stringStatus = view.get(i).getStatus()+"";
+                              System.out.println("stringStatus = " + stringStatus);
                             %>
                             <tr>
                                 <td hidden="true"><%=view.get(i).getIdOrder()%></td>
@@ -62,6 +64,9 @@
                                 <td><%=view.get(i).getQuantity()%></td>
                                 <td><%=view.get(i).getPrice()%></td>
                                 <td><%=view.get(i).getComment()%></td>
+                                <td><%=stringStatus.equalsIgnoreCase("1")
+                                ? "No listo"
+                                : "Listo" %></td>
                             </tr>
 
                             <%}%>

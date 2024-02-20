@@ -17,8 +17,8 @@ public class Order {
     private double price;
     private String comment;
     private int category;
-
-    public Order() {
+    private int status;
+ public Order() {
     }
 
     public Order(int idOrder, int numTable, int idProduct, String nombre, int quantity, double price, String comment, int category) {
@@ -32,15 +32,15 @@ public class Order {
         this.category = category;
     }
 
-    public Order(int idOrder, int idProduct, String nombre, int quantity, double price, String comment) {
+    public Order(int idOrder, int idProduct, String nombre, int quantity, double price, String comment, int status) {
         this.idOrder = idOrder;
         this.idProduct = idProduct;
         this.nombre = nombre;
         this.quantity = quantity;
         this.price = price;
         this.comment = comment;
+        this.status = status;
     }
-    
 
     /**
      * @return the idOrder
@@ -154,9 +154,23 @@ public class Order {
         this.category = category;
     }
 
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Order{" + "idOrder=" + idOrder + ", numTable=" + numTable + ", idProduct=" + idProduct + ", nombre=" + nombre + ", quantity=" + quantity + ", price=" + price + ", comment=" + comment + ", category=" + category + '}';
+        return "Order{" + "idOrder=" + idOrder + ", numTable=" + numTable + ", idProduct=" + idProduct + ", nombre=" + nombre + ", quantity=" + quantity + ", price=" + price + ", comment=" + comment + ", category=" + category + ", status=" + status + '}';
     }
     
 }

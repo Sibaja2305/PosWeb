@@ -83,8 +83,8 @@
                             <option value="">Selecciona una opción</option>
                             <option value="1">Administrador</option>
                             <option value="2">Mesero</option>
-                            <option value="3">Bartender</option>
-                            <option value="4">Chef</option>
+                            <option value="3">Chef</option>
+                            <option value="4">Bartender</option>
                         </select>
                 </div>
              

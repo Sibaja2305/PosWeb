@@ -29,7 +29,7 @@ public class ConnectionMysql {
     String bd = "world";
     String url = "jdbc:mysql://localhost:3306/";
     String usuario = "root";
-    String contraseña = "Racataca2305.";
+    String contraseña = "Supercell07*";
     String driver = "com.mysql.cj.jdbc.Driver";
     Connection cx;
 
@@ -451,13 +451,13 @@ public class ConnectionMysql {
         }
 
     }
-        public boolean insertOrder(int table) {
+       public boolean insertOrder(int table) {
 
         try {
 
             // the mysql insert statement
-            String query = " insert into pedido (id_pedido, num_mesa, id_producto, nombre, cantidad, precio, comentario, categoria) "
-                    + "SELECT id_pedido, num_mesa, id_producto, nombre, cantidad, precio, comentario, categoria FROM pedido_temp WHERE num_mesa = "+table+";";
+            String query = " insert into pedido (id_pedido, num_mesa, id_producto, nombre, cantidad, precio, comentario, categoria, estado) "
+                    + "SELECT id_pedido, num_mesa, id_producto, nombre, cantidad, precio, comentario, categoria, 1 FROM pedido_temp WHERE num_mesa = "+table+";";
 
             // create the mysql insert preparedstatement
             PreparedStatement preparedStmt = cx.prepareStatement(query);
@@ -532,10 +532,10 @@ public class ConnectionMysql {
                 int quantity = Integer.parseInt(rs.getString("cantidad"));
                 double price = Double.parseDouble(rs.getString("precio"));
                 String comment = rs.getString("comentario");
-                
+                int status = Integer.parseInt(rs.getString("estado"));
                
 
-                Order order = new Order(idOrder, idProduct, name, quantity, price, comment);
+                Order order = new Order(idOrder, idProduct, name, quantity, price, comment, status);
 
                 orders.add(order);
 
@@ -550,5 +550,63 @@ public class ConnectionMysql {
             rs.close();
 
         }
+    }
+        public ArrayList<Order> getOrderChef(int table) throws SQLException {
+        Statement stmt = cx.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM pedido WHERE num_mesa = '" + table + "' and categoria = 1;");
+        ArrayList<Order> orders = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                int idOrder = Integer.parseInt(rs.getString("id_pedido"));
+                int idProduct = Integer.parseInt(rs.getString("id_producto"));
+                 String name = rs.getString("nombre");
+                int quantity = Integer.parseInt(rs.getString("cantidad"));
+                double price = Double.parseDouble(rs.getString("precio"));
+                String comment = rs.getString("comentario");
+                int status = Integer.parseInt(rs.getString("estado"));
+               
+
+                Order order = new Order(idOrder, idProduct, name, quantity, price, comment, status);
+
+                orders.add(order);
+
+            }
+            return orders;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+
+        } finally {
+            rs.close();
+
+        }
+    }
+        public boolean editStateOrder(int order, int newStatus) {
+
+        try {
+
+            String query = "UPDATE pedido "
+                    + "     SET estado = "+ newStatus
+                    + "     WHERE id_pedido = ?;";
+
+            PreparedStatement preparedStmt = cx.prepareStatement(query);
+
+            preparedStmt.setInt(1, order);
+
+            // execute the preparedstatement
+            preparedStmt.executeUpdate();
+
+            cx.close();
+         return true;
+        } catch (Exception e) {
+            
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            return false;
+
+        }
+       
+        
     }
 }
