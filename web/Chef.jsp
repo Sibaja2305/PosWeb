@@ -10,14 +10,41 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <link href="estilo.css" rel="stylesheet" type="text/css"/>
+    <script src="PosScript.js" type="text/javascript"></script>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+
     </head>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .boton{
+            margin-left: 10px;
+            width: 50px;
+            height: 20px;
+        }
+        .botton-container{
+            margin-top: 50px;
+            width: 35%;
+            display: flex;
+            flex-wrap: wrap;
+            text-align: right;
+
+        }
+        .table-container{
+            margin-top: 40px;
+        }
+        
+    </style>
     <body>
         <h1></h1>
 
-        <div style="width: 30%">
+        <div  class="botton-container">
             <%
                 int table;
                 try {
@@ -37,11 +64,11 @@
 
 
             %>
-            <div >
+            <div>
                 <label>mesa <%=i + 1%></label>
                 <form action="Chef.jsp" method="POST">
 
-                    <button style="width: 20%; height: 20px" class="boton" type="submit" name="table" value="<%= i + 1%>">
+                    <button  class="boton" type="submit" name="table" value="<%= i + 1%>">
 
                     </button>
 
@@ -53,9 +80,9 @@
                 }
             %>
         </div>
-        <div>
+        <div class="table-container">
             <div class="container">
-                <div class="row" >
+                <div class="row">
                     <div class="col">
                         <table class="table table-bordered" border="1" >
                             <thead>
@@ -90,7 +117,7 @@
                                     <td> 
                                         <form action="OrderReady.jsp">
                                             <input hidden="true" type="text" name="order" value="<%= viewChef.get(i).getIdOrder()%>">
-                                            <input hidden="true" type="text" name="status" value="<%= viewChef.get(i).getStatus()  %>">
+                                            <input hidden="true" type="text" name="status" value="<%= viewChef.get(i).getStatus()%>">
                                             <input hidden="true" type="text" name="table" value="<%= table%>">
                                             <input class="btn-danger" type="submit" value="editar estado">
                                         </form>
