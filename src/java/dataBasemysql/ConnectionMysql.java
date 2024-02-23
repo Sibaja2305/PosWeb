@@ -582,6 +582,37 @@ public class ConnectionMysql {
 
         }
     }
+        public ArrayList<Order> getOrderBartender(int table) throws SQLException {
+        Statement stmt = cx.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM pedido WHERE num_mesa = '" + table + "' and categoria = 2;");
+        ArrayList<Order> orders = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                int idOrder = Integer.parseInt(rs.getString("id_pedido"));
+                int idProduct = Integer.parseInt(rs.getString("id_producto"));
+                 String name = rs.getString("nombre");
+                int quantity = Integer.parseInt(rs.getString("cantidad"));
+                double price = Double.parseDouble(rs.getString("precio"));
+                String comment = rs.getString("comentario");
+                int status = Integer.parseInt(rs.getString("estado"));
+               
+
+                Order order = new Order(idOrder, idProduct, name, quantity, price, comment, status);
+
+                orders.add(order);
+
+            }
+            return orders;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+
+        } finally {
+            rs.close();
+
+        }
+    }
         public boolean editStateOrder(int order, int newStatus) {
 
         try {

@@ -194,6 +194,7 @@
                                             <input hidden="true" type="text" name="order" value="<%= viewChef.get(i).getIdOrder()%>">
                                             <input hidden="true" type="text" name="status" value="<%= viewChef.get(i).getStatus()%>">
                                             <input hidden="true" type="text" name="table" value="<%= table%>">
+                                             <input hidden="true" type="text" name="nameJSP" value="Chef">
                                             <button class="check" type="submit" name="editStatus" value="">
                                                 <img src="<%=urlCheckbox%>" alt=""/>
                                             </button>
